@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.kdg.mapper.NoticeMapper">
+    <select id="findAllNoticeList" resultType="NoticeDao">
+        select * from t_notice
+    </select>
+
+    <insert id="insertNotice">
+         INSERT INTO t_notice(
+            notice_statuss, kind, title, content, register_id, register_date
+        )
+        VALUES (
+            #{noticeStatus}, #{kind}, #{title}, #{content}, #{registerId} , NOW()
+        )
+    </insert>
+
+    <update id="updateNotice">
+        UPDATE t_notice
+        SET notice_status   = #{noticeStatus},
+            kind            = #{kind},
+            title           = #{title},
+            content         = #{content},
+            updater_id      = 109,
+            updater_date    = NOW()
+        WHERE notice_no     = #{noticeNo}
+    </update>
+
+    <update id="deleteByNoticeNo">
+        UPDATE t_notice
+           SET is_delete    = 1,
+               updater_id   = 109,
+               updater_date = NOW()
+         WHERE notice_no    = #{noticeNo}
+    </update>
+</mapper>

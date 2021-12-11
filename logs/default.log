@@ -1,0 +1,23 @@
+2021-12-11 21:53:52 [INFO ] o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2021-12-11 21:53:56 [INFO ] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.1.5.Final
+2021-12-11 21:53:56 [INFO ] com.example.kdg.Application - Starting Application on DESKTOP-OMGG8G6 with PID 11200 (C:\Users\cova7\IdeaProjects\kdg\out\production\classes started by cova7 in C:\Users\cova7\IdeaProjects\kdg)
+2021-12-11 21:53:56 [INFO ] com.example.kdg.Application - No active profile set, falling back to default profiles: default
+2021-12-11 21:53:58 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8888 (http)
+2021-12-11 21:53:58 [INFO ] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8888"]
+2021-12-11 21:53:58 [INFO ] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2021-12-11 21:53:58 [INFO ] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.38]
+2021-12-11 21:53:58 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2021-12-11 21:53:58 [INFO ] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2296 ms
+2021-12-11 21:53:59 [INFO ] s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-12-11 21:53:59 [INFO ] o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2021-12-11 21:54:00 [INFO ] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8888"]
+2021-12-11 21:54:00 [INFO ] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8888 (http) with context path ''
+2021-12-11 21:54:00 [INFO ] s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+2021-12-11 21:54:00 [INFO ] s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2021-12-11 21:54:00 [INFO ] s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+2021-12-11 21:54:00 [INFO ] com.example.kdg.Application - Started Application in 5.429 seconds (JVM running for 6.224)
+2021-12-11 21:54:08 [INFO ] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-12-11 21:54:08 [INFO ] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2021-12-11 21:54:08 [INFO ] o.s.web.servlet.DispatcherServlet - Completed initialization in 9 ms
+2021-12-11 21:54:08 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2021-12-11 21:54:09 [INFO ] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
