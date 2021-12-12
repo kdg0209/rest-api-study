@@ -30,6 +30,15 @@ dependencies {
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
+	// BCrypt 사용
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// jwt 사용
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	// javax.xml.bind.DatatypeConverter Exception jwt 발생시
+	implementation 'javax.xml.bind:jaxb-api:2.1'
+
 	// mybatis - mariadb
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.3'

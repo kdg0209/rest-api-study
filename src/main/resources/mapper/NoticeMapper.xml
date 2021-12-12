@@ -9,7 +9,7 @@
 
     <insert id="insertNotice">
          INSERT INTO t_notice(
-            notice_statuss, kind, title, content, register_id, register_date
+            notice_status, kind, title, content, register_id, register_date
         )
         VALUES (
             #{noticeStatus}, #{kind}, #{title}, #{content}, #{registerId} , NOW()

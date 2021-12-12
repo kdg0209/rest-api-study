@@ -53,56 +53,6 @@ public class ExceptionController {
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleSQLException(Exception e){
         ErrorResponse errorResponse = new ErrorResponse(500, "DB 접속 오류가 발생했습니다. DB정보를 다시 확인해주세요.");
-
-        logger.error(currentDateTime.getCurrentDateTime() + " ===> " +  e.getMessage());
-
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-//    create table vsa.t_account
-//            (
-//    uid           int auto_increment
-//    primary key,
-//    user_id       varchar(70)                not null,
-//    user_pwd      varchar(400)               not null,
-//    role_code     varchar(4)      default '' not null,
-//    register_date datetime                   not null,
-//    register_id   int                        not null,
-//    update_date   datetime                   null,
-//    update_id     int                        null,
-//    user_status   int(1) unsigned default 0  null,
-//    pwd_validate  datetime                   null
-//            )
-//    comment '사용자 정보 ' collate = utf8mb4_unicode_ci;
-//
-//    create index user_id
-//    on vsa.t_account (user_id);
-
-
-//    create table vsa.t_account_info
-//            (
-//    uid                 int                    not null
-//    primary key,
-//    user_id             varchar(70)            not null,
-//    user_name           varchar(20) default '' null,
-//    user_addr           varchar(100)           null,
-//    user_addr2          varchar(100)           null,
-//    user_tel            varchar(15) default '' not null,
-//    user_gender         int(1)                 null,
-//    user_birth_day      date                   null,
-//    user_channel        int(1)      default 1  null,
-//    user_photo_url      text                   null comment '사용자 사진 주소',
-//    user_memo           text                   null comment '메모',
-//    register_store_code varchar(50)            null,
-//    update_date         datetime               null,
-//    update_id           int                    null,
-//    visitor_count       int                    null,
-//    login_time          datetime               null
-//            )
-//    comment '사용자 상세' collate = utf8mb4_unicode_ci;
-//
-//    create index user_id
-//    on vsa.t_account_info (user_id);
-
-
 }

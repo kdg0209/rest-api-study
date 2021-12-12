@@ -27,7 +27,7 @@ public class NoticeService {
     }
 
     public ApiResponse addNotice(NoticeAddDto noticeAddDto) {
-        Map<String, Object> map = new HashMap<>();
+        ResponseMap result = new ResponseMap();
 
         NoticeDao noticeDao = new NoticeDao();
         noticeDao.setNoticeStatus(noticeAddDto.getNoticeStatus());
@@ -38,8 +38,7 @@ public class NoticeService {
 
         noticeMapper.insertNotice(noticeDao);
 
-        map.put("addNotice", noticeAddDto);
-        ApiResponse result = new ApiResponse(map);
+        result.setResponseData("addNotice", noticeAddDto);
         return result;
     }
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Map;
 
-@Api(tags = "notice")
+@Api(tags = "Notice")
 @RequestMapping("/notice")
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +21,7 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @GetMapping("lists")
+    @GetMapping("/lists")
     @ApiOperation(value = "목록")
     public ApiResponse getFindAllNoticeList(){
         return noticeService.getFindAllNoticeList();
