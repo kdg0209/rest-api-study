@@ -24,6 +24,7 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    // git test
     @Bean
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
