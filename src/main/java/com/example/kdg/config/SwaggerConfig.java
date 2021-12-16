@@ -3,6 +3,7 @@ package com.example.kdg.config;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -24,7 +25,7 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    // git test
+
     @Bean
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)

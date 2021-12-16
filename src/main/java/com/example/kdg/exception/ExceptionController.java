@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.security.sasl.AuthenticationException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,12 +48,12 @@ public class ExceptionController {
     }
 
     /**
-     **** Servic 단에서 SQ에 예외가 발생했을 때
+     **** Servic 단에서 SQL에 예외가 발생했을 때
      **/
-    @ExceptionHandler({SQLException.class, DataAccessException.class})
-    @ResponseBody
-    public ResponseEntity<ErrorResponse> handleSQLException(Exception e){
-        ErrorResponse errorResponse = new ErrorResponse(500, "DB 접속 오류가 발생했습니다. DB정보를 다시 확인해주세요.");
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler({SQLException.class, DataAccessException.class})
+//    @ResponseBody
+//    public ResponseEntity<ErrorResponse> handleSQLException(Exception e){
+//        ErrorResponse errorResponse = new ErrorResponse(500, "DB 접속 오류가 발생했습니다. DB정보를 다시 확인해주세요.");
+//        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 }

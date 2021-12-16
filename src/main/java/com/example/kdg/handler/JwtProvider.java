@@ -53,7 +53,7 @@ public class JwtProvider {
         payloads.put("account", authDto.getUserId());
 
         Date ext = new Date(); // 토큰 만료 시간
-        ext.setTime(ext.getTime() + accessExpireTime);
+        ext.setTime(ext.getTime() + refreshExpireTime);
 
         // 토큰 Builder
         String jwt = Jwts.builder()
@@ -72,7 +72,7 @@ public class JwtProvider {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
             return true;
         } catch (MalformedJwtException e) {
-            logger.error("잘못된 JWT 서명입니다.");
+            logger.error("위조된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
             logger.error("만료된 JWT 토큰입니다.");
         } catch (UnsupportedJwtException e) {
