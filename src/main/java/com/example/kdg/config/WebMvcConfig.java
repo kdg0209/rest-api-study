@@ -16,10 +16,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         System.out.println("@Configuration Intercepter call");
 
-        registry.addInterceptor(jwtInterceptor)
+        registry.addInterceptor(jwtInterceptor) // 핸들러 지정
                 .excludePathPatterns("/auth/**")
                 .excludePathPatterns("/account/**")
+                .excludePathPatterns("/webjars/**")
                 .excludePathPatterns("/swagger-ui.html")
                 .excludePathPatterns("/swagger-resources/**");
     }
+
+    
 }

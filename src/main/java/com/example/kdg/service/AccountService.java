@@ -6,7 +6,7 @@ import com.example.kdg.mapper.AccountMapper;
 import com.example.kdg.response.ApiResponse;
 import com.example.kdg.response.ResponseMap;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,7 +37,8 @@ public class AccountService {
     }
 
     private String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(password);
     }
 
 }

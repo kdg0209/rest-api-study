@@ -3,7 +3,6 @@ package com.example.kdg.config;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -24,7 +23,6 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-
 
     @Bean
     public Docket api(){
@@ -70,6 +68,7 @@ public class SwaggerConfig {
         return Lists.newArrayList(new SecurityReference(HttpHeaders.AUTHORIZATION, authorizationScopes));
     }
 
+    // JWT를 인증 헤더로 포함하도록 ApiKey 를 정의
     private ApiKey apiKey() {
         return new ApiKey(HttpHeaders.AUTHORIZATION, "token", "header");
     }

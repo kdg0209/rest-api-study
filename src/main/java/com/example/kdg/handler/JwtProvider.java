@@ -1,6 +1,5 @@
 package com.example.kdg.handler;
 
-import com.example.kdg.dao.AuthDao;
 import com.example.kdg.dto.auth.AuthDto;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
