@@ -1,9 +1,7 @@
 package com.example.kdg.exception;
 
-import com.example.kdg.common.CurrentDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.security.sasl.AuthenticationException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +19,6 @@ import java.util.Map;
 public class ExceptionController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private CurrentDateTime currentDateTime;
 
     /**
      **** Controller에서 @valid 어노테이션을 사용하여

@@ -1,7 +1,5 @@
 package com.example.kdg.handler;
 
-import com.example.kdg.exception.ErrorType;
-import com.example.kdg.exception.customerException.AuthException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

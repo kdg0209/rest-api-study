@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface AuthMapper {
 
-    AuthDao findByAccountUserId(AuthDto authDto);
+//    AuthDao findByAccountUserId(AuthDto authDto);
+    AuthDao findByAccountUserId(String userId);
 }

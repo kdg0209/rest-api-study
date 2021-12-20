@@ -1,27 +1,35 @@
 package com.example.kdg.handler;
 
+import com.example.kdg.common.CustomUserDetailService;
 import com.example.kdg.dto.auth.AuthDto;
 import io.jsonwebtoken.*;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class JwtProvider {
 
-    private final String secretKey ="com.kdg.SecretKey";
+    private final String secretKey ="c88d74ba-1554-48a4-b549-b926f5d77c9e";
     private long accessExpireTime = (60 * 60 * 1000L) * 3;
     private long refreshExpireTime =  ((60 * 60 * 1000L) * 24) * 60;
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
+    private final CustomUserDetailService customUserDetailService;
 
     public String createJwtToken(AuthDto authDto) {
         //Header 부분 설정
         Map<String, Object> headers = new HashMap<>();
-        headers.put("type", "JWT");
+        headers.put("type", "token");
 
         //payload 부분 설정
         Map<String, Object> payloads = new HashMap<>();
@@ -64,6 +72,22 @@ public class JwtProvider {
                 .compact(); // 토큰 생성
 
         return jwt;
+    }
+
+    // JWT 토큰에서 인증 정보 조회
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = customUserDetailService.loadUserByUsername(this.getUserInfo(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    // 토큰에서 회원 정보 추출
+    public String getUserInfo(String token) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    // Request의 Header에서 token 값을 가져옵니다. "X-AUTH-TOKEN" : "TOKEN값'
+    public String resolveToken(HttpServletRequest request) {
+        return request.getHeader("X-AUTH-TOKEN");
     }
 
     public boolean validateJwtToken(String authToken) {

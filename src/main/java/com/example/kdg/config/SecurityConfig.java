@@ -1,18 +1,55 @@
 package com.example.kdg.config;
 
+import com.example.kdg.common.CustomAuthenticationEntryPoint;
+import com.example.kdg.handler.JwtAuthenticationFilter;
+import com.example.kdg.handler.JwtProvider;
+import com.example.kdg.service.AuthService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-//@Configuration
-//@EnableWebSecurity
-//@RequiredArgsConstructor
+@Configuration
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    private final JwtEntryPoint jwtEntryPoint;
-//    private final AuthService authService;
+    private final JwtProvider jwtProvider;
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/webjars/**", "/v2/api-docs", "/swagger-ui.html", "/swagger-resources/**");
+        web.ignoring().antMatchers("/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .httpBasic().disable()                                                      // security에서 기본으로 생성하는 login페이지 사용 안 함
+            .csrf().disable()                                                           // csrf 보안 토큰 disable처리. REST API 사용하기 때문에
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 역시 사용하지 않습니다.
+            .and()
+                .authorizeRequests()                                                    // 요청에 대한 사용권한 체크
+                .antMatchers("/account/**", "/auth/**").permitAll()
+            .and()
+                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+            .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
     }
 }
