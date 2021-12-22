@@ -33,7 +33,7 @@ public class JwtProvider {
 
         //payload 부분 설정
         Map<String, Object> payloads = new HashMap<>();
-        payloads.put("account", authDto.getUserId());
+        payloads.put("userId", authDto.getUserId());
 
         Date ext = new Date(); // 토큰 만료 시간
         ext.setTime(ext.getTime() + accessExpireTime);
@@ -42,7 +42,7 @@ public class JwtProvider {
         String jwt = Jwts.builder()
                 .setHeader(headers) // Headers 설정
                 .setClaims(payloads) // Claims 설정
-                .setSubject("account") // 토큰 용도
+                .setSubject("User Checking") // 토큰 용도
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, secretKey) // HS256과 Key로 Sign
                 .compact(); // 토큰 생성
@@ -57,7 +57,7 @@ public class JwtProvider {
 
         //payload 부분 설정
         Map<String, Object> payloads = new HashMap<>();
-        payloads.put("account", authDto.getUserId());
+        payloads.put("userId", authDto.getUserId());
 
         Date ext = new Date(); // 토큰 만료 시간
         ext.setTime(ext.getTime() + refreshExpireTime);
@@ -82,12 +82,12 @@ public class JwtProvider {
 
     // 토큰에서 회원 정보 추출
     public String getUserInfo(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("userId");
     }
 
-    // Request의 Header에서 token 값을 가져옵니다. "X-AUTH-TOKEN" : "TOKEN값'
+    // Request의 Header에서 token 값을 가져옵니다. "token" : "token value'
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("X-AUTH-TOKEN");
+        return request.getHeader("token");
     }
 
     public boolean validateJwtToken(String authToken) {

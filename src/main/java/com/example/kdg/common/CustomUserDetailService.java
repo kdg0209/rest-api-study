@@ -1,6 +1,8 @@
 package com.example.kdg.common;
 
 import com.example.kdg.dao.AuthDao;
+import com.example.kdg.exception.ErrorType;
+import com.example.kdg.exception.customerException.AuthenticationException;
 import com.example.kdg.mapper.AuthMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,9 +20,8 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AuthDao member = authMapper.findByAccountUserId(username);
 
-        System.out.println("member : " + member);
         if (member == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+            throw new AuthenticationException(ErrorType.UsernameNotFoundException);
         } else {
             return member;
         }
