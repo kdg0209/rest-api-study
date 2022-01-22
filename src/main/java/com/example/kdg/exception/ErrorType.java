@@ -9,8 +9,8 @@ public enum ErrorType {
     BadCredentialsException (400, "비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST),
     DataIsNullException(400, "필수값이 누락되었습니다.", HttpStatus.BAD_REQUEST),
     NotNULL(400, "필수값이 누락되었습니다.", HttpStatus.BAD_REQUEST),
-    AuthenticationValidationException (401, "token값이 존재하지 않습니다.", HttpStatus.BAD_REQUEST),
-
+    UNAUTHORIZEDException (401, "로그인 후 이용가능합니다.", HttpStatus.UNAUTHORIZED),
+    ExpiredJwtException(401, "토큰이 만료되었습니다.", HttpStatus.UNAUTHORIZED),
     ;
 
     @Getter

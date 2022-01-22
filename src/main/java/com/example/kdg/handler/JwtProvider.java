@@ -21,8 +21,9 @@ import java.util.Map;
 public class JwtProvider {
 
     private final String secretKey ="c88d74ba-1554-48a4-b549-b926f5d77c9e";
-    private long accessExpireTime = (60 * 60 * 1000L) * 3;
-    private long refreshExpireTime =  ((60 * 60 * 1000L) * 24) * 60;
+//    private long accessExpireTime = (60 * 60 * 1000L) * 3; // 3시간 후
+    private final long accessExpireTime = 1 * 60 * 1000L;   // 1분
+    private long refreshExpireTime =  ((60 * 60 * 1000L) * 24) * 60; // 60일
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
     private final CustomUserDetailService customUserDetailService;
 
@@ -35,15 +36,15 @@ public class JwtProvider {
         Map<String, Object> payloads = new HashMap<>();
         payloads.put("userId", authDto.getUserId());
 
-        Date ext = new Date(); // 토큰 만료 시간
-        ext.setTime(ext.getTime() + accessExpireTime);
+        Date expiration = new Date(); // 토큰 만료 시간
+        expiration.setTime(expiration.getTime() + accessExpireTime);
 
         // 토큰 Builder
         String jwt = Jwts.builder()
                 .setHeader(headers) // Headers 설정
                 .setClaims(payloads) // Claims 설정
                 .setSubject("User Checking") // 토큰 용도
-                .setIssuedAt(new Date())
+                .setExpiration(expiration) // 토큰 만료 시간
                 .signWith(SignatureAlgorithm.HS256, secretKey) // HS256과 Key로 Sign
                 .compact(); // 토큰 생성
 
@@ -59,15 +60,15 @@ public class JwtProvider {
         Map<String, Object> payloads = new HashMap<>();
         payloads.put("userId", authDto.getUserId());
 
-        Date ext = new Date(); // 토큰 만료 시간
-        ext.setTime(ext.getTime() + refreshExpireTime);
+        Date expiration = new Date(); // 토큰 만료 시간
+        expiration.setTime(expiration.getTime() + refreshExpireTime);
 
         // 토큰 Builder
         String jwt = Jwts.builder()
                 .setHeader(headers) // Headers 설정
                 .setClaims(payloads) // Claims 설정
                 .setSubject("User Checking") // 토큰 용도
-                .setIssuedAt(new Date())
+                .setExpiration(expiration) // 토큰 만료 시간
                 .signWith(SignatureAlgorithm.HS256, secretKey) // HS256과 Key로 Sign
                 .compact(); // 토큰 생성
 

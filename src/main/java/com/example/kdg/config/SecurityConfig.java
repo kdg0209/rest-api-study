@@ -25,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtProvider jwtProvider;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomUserDetailService customUserDetailService;
 
     // https://derekpark.tistory.com/42 참고
@@ -58,15 +59,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .httpBasic().disable()                                                      // security에서 기본으로 생성하는 login페이지 사용 안 함
-            .csrf().disable()                                                           // csrf 보안 토큰 disable처리. REST API 사용하기 때문에
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 역시 사용하지 않습니다.
+            // security에서 기본으로 생성하는 login페이지 사용 안 함
+            .httpBasic().disable()
+
+            // csrf 보안 토큰 disable처리. REST API 사용하기 때문에
+            .csrf().disable()
+
+            // 토큰 기반 인증이므로 세션 역시 사용하지 않습니다.
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-                .authorizeRequests()                                                    // 요청에 대한 사용권한 체크
-                .antMatchers("/account/**", "/auth/**").permitAll()          // 누구나 접근 가능
-                .anyRequest().authenticated()                                           // 나머지는 인증이 되어야 접근 가능
+
+                // 요청에 대한 사용권한 체크
+                .authorizeRequests()
+
+                // 누구나 접근 가능
+                .antMatchers("/account/**", "/auth/**").permitAll()
+
+                // 나머지는 인증이 되어야 접근 가능
+                .anyRequest().authenticated()
             .and()
-                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+
+                // 401에러 커스텀
+                .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
             .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
     }

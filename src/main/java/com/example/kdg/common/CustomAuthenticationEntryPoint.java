@@ -1,17 +1,50 @@
 package com.example.kdg.common;
 
+import com.example.kdg.exception.ErrorType;
+import org.json.simple.JSONObject;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "접근 권한이 없습니다. 로그인 후 이용 가능");
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        String exception = (String)request.getAttribute("exception");
+        ErrorType errorType;
+
+        /**
+         * 토큰이 없는 경우 예외처리
+         */
+        if(exception == null) {
+            errorType = ErrorType.UNAUTHORIZEDException;
+            setResponse(response, errorType);
+            return;
+        }
+
+        /**
+         * 토큰이 만료된 경우 예외처리
+         */
+        if(exception.equals("ExpiredJwtException")) {
+            errorType = ErrorType.ExpiredJwtException;
+            setResponse(response, errorType);
+            return;
+        }
+    }
+
+    private void setResponse(HttpServletResponse response, ErrorType errorType) throws IOException {
+        JSONObject json = new JSONObject();
+        response.setContentType("application/json;charset=UTF-8");
+        response.setCharacterEncoding("utf-8");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+        json.put("code", errorType.getCode());
+        json.put("message", errorType.getDescription());
+        response.getWriter().print(json);
     }
 }
