@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.kdg.mapper.AuthRefreshTokenMapper">
+    <select id="findByAccessToken" resultType="String">
+        SELECT refresh_token FROM auth_refresh_token WHERE access_token = #{accessToken}
+    </select>
+    <insert id="insertRefreshToken">
+        INSERT INTO auth_refresh_token(
+            user_id,
+            access_token,
+            refresh_token
+        )
+        VALUES (
+            #{userId},
+            #{accessToken},
+            #{refreshToken}
+        )
+    </insert>
+
+    <delete id="deleteByAccessToken">
+        DELETE FROM auth_refresh_token WHERE access_token = #{accessToken}
+    </delete>
+</mapper>
