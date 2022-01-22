@@ -27,14 +27,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             return;
         }
 
-        /**
-         * 토큰이 만료된 경우 예외처리
-         */
-        if(exception.equals("ExpiredJwtException")) {
-            errorType = ErrorType.ExpiredJwtException;
-            setResponse(response, errorType);
-            return;
-        }
     }
 
     private void setResponse(HttpServletResponse response, ErrorType errorType) throws IOException {
