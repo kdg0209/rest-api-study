@@ -92,6 +92,7 @@ public class JwtProvider {
         return request.getHeader("token");
     }
 
+
     public boolean validateJwtToken(ServletRequest request, String authToken) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);

@@ -1,6 +1,7 @@
 package com.example.kdg.controller;
 
 import com.example.kdg.dto.auth.AuthDto;
+import com.example.kdg.dto.auth.GetNewAccessToken;
 import com.example.kdg.response.ApiResponse;
 import com.example.kdg.service.AuthService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Api(tags = "Auth")
@@ -23,5 +25,10 @@ public class AuthController {
     @PostMapping("/login")
     public ApiResponse login(@RequestBody @Valid AuthDto authDto) {
         return authService.login(authDto);
+    }
+
+    @PostMapping("/get-newToken")
+    public ApiResponse newAccessToken(@RequestBody @Valid GetNewAccessToken getNewAccessToken, HttpServletRequest request) {
+        return authService.newAccessToken(getNewAccessToken, request);
     }
 }
