@@ -6,6 +6,11 @@
 rest api 
 - Security-JWT에 대한 공부
 - https://kdg-is.tistory.com/228
+<br />
+
+- JWT - Refresh token을 사용하는 방법
+- https://kdg-is.tistory.com/228
+
 - --
 - @Valid, @ControllerAdvice를 사용하여 유효성 검사
 - https://kdg-is.tistory.com/222
@@ -17,7 +22,6 @@ rest api
 
 ## 앞으로 할것
 
-- refresh token을 사용하는 방법
 - enum을 활용하여 error 처리 방법
 - Interceptor에 대하여
 - Security에 대한 공부가 더 필요한거 같아보임
