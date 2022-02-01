@@ -1,5 +1,6 @@
 package com.example.kdg.exception;
 
+import com.example.kdg.exception.customerException.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,16 @@ public class ExceptionController {
         }
         ErrorResponse errorResponse = new ErrorResponse(400, errorList);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     **** 로그인시 아이디 또는 비밀번호가 일치하지 않는 예외가 발생했을 때
+     **/
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex){
+        ErrorResponse errorResponse = new ErrorResponse(ErrorType.UsernameOrPasswordNotFoundException.getCode(), ErrorType.UsernameOrPasswordNotFoundException.getDescription());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**

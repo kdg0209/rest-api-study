@@ -4,7 +4,7 @@ import com.example.kdg.exception.ErrorType;
 
 public class AuthenticationException extends RuntimeException{
 
-    private ErrorType errorType;
+    private final ErrorType errorType;
 
     public AuthenticationException(ErrorType errorType) {
         this.errorType = errorType;

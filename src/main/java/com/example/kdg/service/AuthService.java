@@ -24,9 +24,9 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final AuthRefreshTokenMapper authRefreshTokenMapper;
 
-    public ApiResponse login(AuthDto authDto){
-        // https://oingdaddy.tistory.com/206
+    public ApiResponse login(AuthDto authDto) {
         ResponseMap result = new ResponseMap();
+
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authDto.getUserId(), authDto.getUserPwd())
@@ -38,8 +38,7 @@ public class AuthService {
 
             result.setResponseData("accessToken", accessToken);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            throw new AuthenticationException(ErrorType.UsernameOrPasswordNotFoundException);
         }
 
         return result;

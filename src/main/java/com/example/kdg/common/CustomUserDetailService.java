@@ -21,7 +21,7 @@ public class CustomUserDetailService implements UserDetailsService {
         AuthDao member = authMapper.findByAccountUserId(username);
 
         if (member == null) {
-            throw new AuthenticationException(ErrorType.UsernameNotFoundException);
+            throw new AuthenticationException(ErrorType.UsernameOrPasswordNotFoundException);
         } else {
             return member;
         }
