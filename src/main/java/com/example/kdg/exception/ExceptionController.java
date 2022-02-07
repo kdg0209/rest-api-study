@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +52,16 @@ public class ExceptionController {
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex){
         ErrorResponse errorResponse = new ErrorResponse(ErrorType.UsernameOrPasswordNotFoundException.getCode(), ErrorType.UsernameOrPasswordNotFoundException.getDescription());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     **** 해당 요청에 대한 권한이 없는 예외가 발생했을 때
+     **/
+    @ExceptionHandler(HttpClientErrorException.Forbidden.class)
+    @ResponseBody
+    public ResponseEntity<ErrorResponse> handleForbiddenException(AuthenticationException ex){
+        ErrorResponse errorResponse = new ErrorResponse(ErrorType.ForbiddenException.getCode(), ErrorType.ForbiddenException.getDescription());
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
     /**

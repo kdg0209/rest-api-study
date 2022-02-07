@@ -4,7 +4,7 @@
 
 <mapper namespace="com.example.kdg.mapper.AuthMapper">
     <select id="findByAccountUserId" resultType="AuthDao">
-        SELECT user_id, user_pwd FROM t_account WHERE user_id = #{userId}
+        SELECT user_id, user_pwd, user_role FROM t_account WHERE user_id = #{userId}
     </select>
 
 </mapper>

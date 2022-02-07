@@ -4,6 +4,7 @@ import com.example.kdg.common.CustomAuthenticationEntryPoint;
 import com.example.kdg.common.CustomUserDetailService;
 import com.example.kdg.handler.JwtAuthenticationFilter;
 import com.example.kdg.handler.JwtProvider;
+import com.example.kdg.handler.WebAccessDeniedHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtProvider jwtProvider;
+    private final WebAccessDeniedHandler webAccessDeniedHandler;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomUserDetailService customUserDetailService;
 
@@ -73,14 +75,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 // 누구나 접근 가능
+                .antMatchers("/notice/**").hasRole("ADMIN")
                 .antMatchers("/account/**", "/auth/**").permitAll()
+//                .antMatchers("/notice/**").access("@authorizationDynamicHandler.isAuthorization(request, authentication)")
 
                 // 나머지는 인증이 되어야 접근 가능
                 .anyRequest().authenticated()
             .and()
 
-                // 401에러 커스텀
-                .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
+                // 예외처리
+                .exceptionHandling()
+                    // 401에러 커스텀
+                    .authenticationEntryPoint(customAuthenticationEntryPoint)
+                
+                    // 권한 에러 커스텀
+                    .accessDeniedHandler(webAccessDeniedHandler)
             .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
     }

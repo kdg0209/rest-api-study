@@ -21,10 +21,10 @@ import java.util.Map;
 public class JwtProvider {
 
     private final String secretKey ="c88d74ba-1554-48a4-b549-b926f5d77c9e";
-//    private long accessExpireTime = (60 * 60 * 1000L) * 3; // 3시간 후
-    private final long accessExpireTime = 1 * 60 * 1000L;   // 1분
-//    private long refreshExpireTime =  ((60 * 60 * 1000L) * 24) * 60; // 60일
-    private final long refreshExpireTime = 1 * 60 * 2000L;   // 2분
+    private long accessExpireTime = (60 * 60 * 1000L) * 3; // 3시간 후
+//    private final long accessExpireTime = 1 * 60 * 1000L;   // 1분
+    private long refreshExpireTime =  ((60 * 60 * 1000L) * 24) * 60; // 60일
+//    private final long refreshExpireTime = 1 * 60 * 2000L;   // 2분
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
     private final CustomUserDetailService customUserDetailService;
 
