@@ -1,12 +1,12 @@
 package com.example.kdg.exception.customerException;
 
-import com.example.kdg.exception.ErrorType;
+import com.example.kdg.exception.ErrorCode;
 
 public class AuthenticationException extends RuntimeException{
 
-    private final ErrorType errorType;
+    private final ErrorCode errorType;
 
-    public AuthenticationException(ErrorType errorType) {
+    public AuthenticationException(ErrorCode errorType) {
         this.errorType = errorType;
     }
 }

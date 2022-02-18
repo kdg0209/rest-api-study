@@ -1,4 +1,4 @@
-package com.example.kdg.controller;
+package com.example.kdg.app;
 
 import com.example.kdg.dto.notice.NoticeAddDto;
 import com.example.kdg.dto.notice.NoticeUpdateDto;
@@ -11,10 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 @Api(tags = "Notice")
-@RequestMapping("/notice")
+@RequestMapping("/app/notice")
 @RestController
 @RequiredArgsConstructor
 public class NoticeController {

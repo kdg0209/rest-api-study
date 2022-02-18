@@ -1,6 +1,6 @@
-package com.example.kdg.controller;
+package com.example.kdg.app;
 
-import com.example.kdg.dto.account.AccountDto;
+import com.example.kdg.dto.account.AccountDTO;
 import com.example.kdg.response.ApiResponse;
 import com.example.kdg.service.AccountService;
 import io.swagger.annotations.Api;
@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @Api(tags = "Account")
-@RequestMapping("/account")
+@RequestMapping("/app/account")
 @RestController
 @RequiredArgsConstructor
 public class AccountController {
 
     private final AccountService accountService;
 
-    @PostMapping("/add")
-    public ApiResponse addAccount(@RequestBody @Valid AccountDto accountDto){
+    @PostMapping("/acount")
+    public ApiResponse acount(@RequestBody @Valid AccountDTO accountDto){
         return accountService.addAccount(accountDto);
     }
 }

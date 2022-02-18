@@ -24,29 +24,58 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    private String title;
+    private String description;
+
     @Bean
-    public Docket api(){
+    public Docket AppApi(){
+        title = "App Service";
+        description = "사용자 API";
+
         return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("App")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.kdg.controller"))
-                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.example.kdg.app"))
+                .paths(PathSelectors.ant("/app/**"))
                 .build()
-                .securityContexts(securityContext())
+                .securityContexts(AppSecurityContext())
                 .securitySchemes(Arrays.asList(apiKey()))
-                .apiInfo(apiInfo());
+                .apiInfo(apiInfo(title, description));
     }
 
-    private ApiInfo apiInfo(){
+    @Bean
+    public Docket AdminApi(){
+        title = "Admin Service";
+        description = "관리자 API";
+
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("Admin")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.example.kdg.admin"))
+                .paths(PathSelectors.ant("/admin/**"))
+                .build()
+                .securityContexts(Arrays.asList(adminSecurityContext()))
+                .securitySchemes(Arrays.asList(apiKey()))
+                .apiInfo(apiInfo(title, description));
+    }
+
+    private ApiInfo apiInfo(String title, String description){
         return new ApiInfoBuilder()
-                .title("Example")
+                .title(title)
                 .version("1.0.0")
-                .description("CRUD Example")
+                .description(description)
                 .build();
     }
 
-    private List<SecurityContext> securityContext() {
+    private SecurityContext adminSecurityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .build();
+    }
+
+    private List<SecurityContext> AppSecurityContext() {
         String paths[] = {
-                "/notice.*",
+                "/app/board/write",
         };
 
         List<SecurityContext> securityContexts = new ArrayList<>();
@@ -57,7 +86,6 @@ public class SwaggerConfig {
                     .forPaths(PathSelectors.regex(path))
                     .build());
         }
-
         return securityContexts;
     }
 
@@ -68,7 +96,6 @@ public class SwaggerConfig {
         return Lists.newArrayList(new SecurityReference(HttpHeaders.AUTHORIZATION, authorizationScopes));
     }
 
-    // JWT를 인증 헤더로 포함하도록 ApiKey 를 정의
     private ApiKey apiKey() {
         return new ApiKey(HttpHeaders.AUTHORIZATION, "token", "header");
     }

@@ -1,7 +1,5 @@
 package com.example.kdg.handler;
 
-import com.example.kdg.exception.ErrorType;
-import com.example.kdg.exception.customerException.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

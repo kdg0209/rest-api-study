@@ -1,6 +1,7 @@
 package com.example.kdg.handler;
 
 import com.example.kdg.common.CustomUserDetailService;
+import com.example.kdg.dto.auth.AuthDTO;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -21,57 +22,53 @@ import java.util.Map;
 public class JwtProvider {
 
     private final String secretKey ="c88d74ba-1554-48a4-b549-b926f5d77c9e";
-    private long accessExpireTime = (60 * 60 * 1000L) * 3; // 3시간 후
-//    private final long accessExpireTime = 1 * 60 * 1000L;   // 1분
-    private long refreshExpireTime =  ((60 * 60 * 1000L) * 24) * 60; // 60일
-//    private final long refreshExpireTime = 1 * 60 * 2000L;   // 2분
+    //    private long accessExpireTime = (60 * 60 * 1000L) * 3; // 3시간 후
+    private final long accessExpireTime = 1 * 60 * 1000L;   // 1분
+    //    private long refreshExpireTime =  ((60 * 60 * 1000L) * 24) * 60; // 60일
+    private final long refreshExpireTime = 1 * 60 * 2000L;   // 2분
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
     private final CustomUserDetailService customUserDetailService;
 
-    public String createJwtToken(String userId) {
-        //Header 부분 설정
+    public String createAccessToken(AuthDTO authDTO) {
         Map<String, Object> headers = new HashMap<>();
         headers.put("type", "token");
 
-        //payload 부분 설정
         Map<String, Object> payloads = new HashMap<>();
-        payloads.put("userId", userId);
+        payloads.put("email", authDTO.getEmail());
 
-        Date expiration = new Date(); // 토큰 만료 시간
+        Date expiration = new Date();
         expiration.setTime(expiration.getTime() + accessExpireTime);
 
-        // 토큰 Builder
-        String jwt = Jwts.builder()
-                .setHeader(headers) // Headers 설정
-                .setClaims(payloads) // Claims 설정
-                .setSubject("User Checking") // 토큰 용도
-                .setExpiration(expiration) // 토큰 만료 시간
-                .signWith(SignatureAlgorithm.HS256, secretKey) // HS256과 Key로 Sign
-                .compact(); // 토큰 생성
+        String jwt = Jwts
+                .builder()
+                .setHeader(headers)
+                .setClaims(payloads)
+                .setSubject("user")
+                .setExpiration(expiration)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
 
         return jwt;
     }
 
-    public String createRefreshToken(String userId) {
-        //Header 부분 설정
+    public String createRefreshToken(AuthDTO authDTO) {
         Map<String, Object> headers = new HashMap<>();
         headers.put("type", "token");
 
-        //payload 부분 설정
         Map<String, Object> payloads = new HashMap<>();
-        payloads.put("userId", userId);
+        payloads.put("email", authDTO.getEmail());
 
-        Date expiration = new Date(); // 토큰 만료 시간
+        Date expiration = new Date();
         expiration.setTime(expiration.getTime() + refreshExpireTime);
 
-        // 토큰 Builder
-        String jwt = Jwts.builder()
-                .setHeader(headers) // Headers 설정
-                .setClaims(payloads) // Claims 설정
-                .setSubject("User Checking") // 토큰 용도
-                .setExpiration(expiration) // 토큰 만료 시간
-                .signWith(SignatureAlgorithm.HS256, secretKey) // HS256과 Key로 Sign
-                .compact(); // 토큰 생성
+        String jwt = Jwts
+                .builder()
+                .setHeader(headers)
+                .setClaims(payloads)
+                .setSubject("user")
+                .setExpiration(expiration)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
 
         return jwt;
     }
@@ -84,7 +81,7 @@ public class JwtProvider {
 
     // 토큰에서 회원 정보 추출
     public String getUserInfo(String token) {
-        return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("userId");
+        return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email");
     }
 
     // Request의 Header에서 token 값을 가져옵니다. "token" : "token value'

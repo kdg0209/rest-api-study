@@ -4,44 +4,11 @@
 
 <mapper namespace="com.example.kdg.mapper.AccountMapper">
     <insert id="insertAccount">
-        INSERT INTO t_account(
-            user_id, user_pwd, register_date
+        INSERT INTO user(
+            name, email, password, role
         )
         VALUES (
-            #{userId}, #{userPwd}, NOW()
-        )
-    </insert>
-
-    <insert id="insertAccountInfo">
-        <selectKey resultType="int" keyProperty="uid" order="BEFORE">
-            SELECT uid FROM t_account WHERE user_id = #{userId}
-        </selectKey>
-
-        INSERT INTO t_account_info(
-            uid,
-            user_id,
-            user_name,
-            user_addr,
-            user_addr2,
-            user_tel,
-            user_gender,
-            user_birth_day,
-            user_channel,
-            user_photo_url,
-            user_memo
-        )
-        VALUES (
-            #{uid},
-            #{userId},
-            #{userName},
-            #{userAddr},
-            #{userAddr2},
-            #{userTel},
-            #{userGender},
-            #{userBirthDay},
-            #{userChannel},
-            #{userPhotoUrl},
-            #{userMemo}
+            #{name}, #{email}, #{password}, #{role}
         )
     </insert>
 </mapper>

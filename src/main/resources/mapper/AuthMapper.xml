@@ -3,8 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.kdg.mapper.AuthMapper">
-    <select id="findByAccountUserId" resultType="AuthDao">
-        SELECT user_id, user_pwd, user_role FROM t_account WHERE user_id = #{userId}
+    <select id="findByEmail" resultType="User">
+        SELECT name, email, password, role FROM User WHERE email = #{email}
     </select>
-
 </mapper>

@@ -3,7 +3,7 @@ package com.example.kdg.exception;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-public enum ErrorType {
+public enum ErrorCode {
 
     UsernameOrPasswordNotFoundException (400, "아이디 또는 비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST),
     ForbiddenException(403, "해당 요청에 대한 권한이 없습니다.", HttpStatus.FORBIDDEN),
@@ -16,14 +16,14 @@ public enum ErrorType {
     private int code;
 
     @Getter
-    private String description;
+    private String message;
 
     @Getter
     private HttpStatus httpStatus;
 
-    ErrorType(int code, String description, HttpStatus httpStatus) {
+    ErrorCode(int code, String message, HttpStatus httpStatus) {
         this.code = code;
-        this.description = description;
+        this.message = message;
         this.httpStatus = httpStatus;
     }
 }

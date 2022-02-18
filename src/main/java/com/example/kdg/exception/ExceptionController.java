@@ -50,7 +50,7 @@ public class ExceptionController {
     @ExceptionHandler(AuthenticationException.class)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException ex){
-        ErrorResponse errorResponse = new ErrorResponse(ErrorType.UsernameOrPasswordNotFoundException.getCode(), ErrorType.UsernameOrPasswordNotFoundException.getDescription());
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.UsernameOrPasswordNotFoundException.getCode(), ErrorCode.UsernameOrPasswordNotFoundException.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -60,7 +60,7 @@ public class ExceptionController {
     @ExceptionHandler(HttpClientErrorException.Forbidden.class)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleForbiddenException(AuthenticationException ex){
-        ErrorResponse errorResponse = new ErrorResponse(ErrorType.ForbiddenException.getCode(), ErrorType.ForbiddenException.getDescription());
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.ForbiddenException.getCode(), ErrorCode.ForbiddenException.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
